@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - WebSockets",
+            "request": "launch",
+            "mainClass": "com.VL.Srapper.WebSockets",
+            "projectName": "Scrapper"
+        }
+    ]
+}
