@@ -1,6 +1,11 @@
 package com.VL.Srapper;
 
 //https://tyrus-project.github.io/documentation/1.12/user-guide.html#getting-started
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class WebSockets {
 
     /**
@@ -22,7 +27,12 @@ public class WebSockets {
 
         @javax.websocket.OnMessage
         public void onMessage(javax.websocket.Session session, String message) {
-            System.out.println("Message from JavaScript: " + message);
+            try {
+                System.out.println("Message from JavaScript: " + message);
+                session.getBasicRemote().sendText(message);
+            } catch (IOException ex) {
+                Logger.getLogger(WebSockets.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         @javax.websocket.OnOpen
@@ -53,3 +63,5 @@ public class WebSockets {
         }
     }
 }
+
+
