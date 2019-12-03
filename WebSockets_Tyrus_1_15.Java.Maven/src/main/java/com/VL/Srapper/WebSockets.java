@@ -5,6 +5,11 @@ package com.VL.Srapper;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.websocket.DeploymentException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebSockets {
 
@@ -27,25 +32,71 @@ public class WebSockets {
 
         @javax.websocket.OnMessage
         public void onMessage(javax.websocket.Session session, String message) {
-            try {
-                System.out.println("Message from JavaScript: " + message);
-                session.getBasicRemote().sendText(message);
-            } catch (IOException ex) {
-                Logger.getLogger(WebSockets.class.getName()).log(Level.SEVERE, null, ex);
+            JSONObject jMessage= new JSONObject(message);       //convertir le message en object JSON
+            //System.out.println("jMessage.has(\"Response\")= " + jMessage.has("Response"));
+            //System.out.println("jMessage.has(\"Request\")= " + jMessage.has("Request"));
+            
+            if ( jMessage.has("Response") ){
+                
+                System.out.println("Message de JavaScript :" + jMessage.get("Response"));
+                
+            }else if (jMessage.has("Request")){
+                String query = jMessage.getString("Request");
+                int qty = jMessage.getInt("Quantity");
+                
+                //TODO : Remplir la liste produits avec qty produit de la recherche de query
+                List<Produit> produits = new ArrayList<>();
+                
+                /*  TEST AJOUT PRODUIT  */
+                List<String> images = new ArrayList<>();
+                images.add("URL1");
+                images.add("URL2");
+                List<String> signaletique = new ArrayList<>();
+                signaletique.add("URL_A");
+                signaletique.add("URL_B");
+                List<String> colone1 = new ArrayList<>();
+                colone1.add("Informations nutritionnelles");
+                colone1.add("valeur énergétique (kJ)");
+                colone1.add("valeur énergétique (kcal)");
+                List<String> colone2 = new ArrayList<>();
+                colone2.add("100 g");
+                colone2.add("~287 kJ");
+                colone2.add("~68 kcal");
+                List<List<String>> tabNutri = new ArrayList<>();
+                tabNutri.add(colone1);
+                tabNutri.add(colone2);
+                Produit patate = new Produit("patate",  "Des patates",  1.5, "1kg", images,signaletique,"Url_z",
+                                "De l'amour et des calins", "pollens", "E3000, T69", "Froid", tabNutri);
+                produits.add(patate);
+                produits.add(patate);              
+                /* Fin test */
+                
+                //Trasfert la list de produit dans une liste d'objets JSON
+                List <JSONObject> jsonProduits = new ArrayList<>();
+                produits.forEach((prod) -> {jsonProduits.add(prod.toJson());});
+                
+                JSONArray jProduits = new JSONArray(jsonProduits);  
+                System.out.println("JSONArray.toString" + jProduits.toString());
+                
+                try{
+                    session.getBasicRemote().sendText(jProduits.toString());
+                } catch (IOException ex) {
+                    Logger.getLogger(WebSockets.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
         @javax.websocket.OnOpen
         public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException {
             System.out.println("OnOpen... " + ec.getUserProperties().get("Author"));
-            session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
+            //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
         }
     }
 
     public static void main(String[] args) {
 
         java.util.Map<String, Object> user_properties = new java.util.HashMap();
-        user_properties.put("Author", "FranckBarbier");
+        user_properties.put("Author", "");
 
         org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 1963, "/FranckBarbier", user_properties /* or 'null' */, My_ServerEndpoint.class);
         try {
@@ -56,8 +107,7 @@ public class WebSockets {
             java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
             System.out.println("Please press a key to stop the server...");
             reader.readLine();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | DeploymentException e) {
         } finally {
             server.stop();
         }

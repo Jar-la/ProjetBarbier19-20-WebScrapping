@@ -11,9 +11,10 @@ window.onload = () => {
   };
   service.onopen = () => {
       console.log("service.onopen...");
+      /*
       let response = window.confirm(service.url + " just opened... Say 'Hi!'?");
       if (response)
-          service.send(JSON.stringify({Response: "Hi!"}));
+          service.send(JSON.stringify({Response: "Hi!"}));*/
   };
   service.onclose = (event/*:CloseEvent*/) => {
       console.log("service.onclose... " + event.code);
@@ -28,5 +29,6 @@ window.onload = () => {
 function request(){
     let search = document.getElementById('s').value;
     let searchReg = search.replace(/[^a-z0-9]/gi,'');
-    service.send(JSON.stringify({Request: `${searchReg}`}))
+    let quantity = 1;
+    service.send(JSON.stringify({ Request:`${searchReg}` , Quantity:`${quantity}` }))
 }
