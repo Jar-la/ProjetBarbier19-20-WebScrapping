@@ -31,6 +31,11 @@ public class Produit {
     private Double  price;
     
     /**
+     *  The price per Kg of the product.
+     */
+    private Double pricePerKg;
+
+    /**
      * The packaging of the product.
      */
     private String pack;
@@ -84,6 +89,7 @@ public class Produit {
         name = null;
         desc = null;
         price = null;
+        pricePerKg =null;
         pack = null;
         pics = null;
         sign = null;
@@ -101,6 +107,7 @@ public class Produit {
      * @param name          // Name
      * @param desc          // Description
      * @param price         // Price
+     * @param pricePerKg    // Price per Kg
      * @param pack          // Packaging
      * @param pics          // Urls of pictures 
      * @param sign          // Urls of signaltic pictures
@@ -111,7 +118,7 @@ public class Produit {
      * @param pres          // List of all preservatives
      * @param tabNut        // Table of nutritional values
      */
-    Produit(String name, String desc, Double price, String pack, List<String> pics, 
+    Produit(String name, String desc, Double price, Double pricePerKg,  String pack, List<String> pics, 
             List<String> sign, String nutriScore, String ingr, String aller, 
             String addit, String pres, List<List<String>> tabNut){
         this.name = name;
@@ -142,6 +149,10 @@ public class Produit {
     
     public void setPrice(Double price){
         this.price = price;
+    }
+
+    public void setPricePerKg(Double pricePerKg){
+        this.pricePerKg = pricePerKg
     }
     
     public void setPack(String pack){
