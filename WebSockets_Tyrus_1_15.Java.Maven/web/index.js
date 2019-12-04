@@ -6,9 +6,18 @@ window.onload = () => {
 
   // Tested with Tyrus 1.15 WebSockets Java library
   let service = new WebSocket("ws://localhost:1963/FranckBarbier/WebSockets_illustration");
+  
   service.onmessage = (event) => {
       console.log("Message from Java: " + event.data);
+      
+      let productArray = JSON.parse(event.data);
+
+      for (let i = 0; i < productArray.length; i++) {
+          let produit = productArray[i];
+          console.log(produit);
+      }
   };
+
   service.onopen = () => {
       console.log("service.onopen...");
       /*
