@@ -124,6 +124,7 @@ public class Produit {
         this.name = name;
         this.desc = desc;
         this.price = price;
+        this.pricePerKg = pricePerKg;
         this.pack = pack;
         this.pics = pics;
         this.sign = sign;
@@ -152,7 +153,7 @@ public class Produit {
     }
 
     public void setPricePerKg(Double pricePerKg){
-        this.pricePerKg = pricePerKg
+        this.pricePerKg = pricePerKg;
     }
     
     public void setPack(String pack){
@@ -221,6 +222,7 @@ public class Produit {
         jsonObject.put ("name" ,this.name);
         jsonObject.put ("desc" ,this.desc);
         jsonObject.put ("price" ,this.price);
+        jsonObject.put ("pricePerKg",this.pricePerKg);
         jsonObject.put ("pack" ,this.pack);
         jsonObject.put ("pics" ,this.pics);
         jsonObject.put ("sign" ,this.sign);

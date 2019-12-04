@@ -65,7 +65,7 @@ public class WebSockets {
                 List<List<String>> tabNutri = new ArrayList<>();
                 tabNutri.add(colone1);
                 tabNutri.add(colone2);
-                Produit patate = new Produit("patate",  "Des patates",  1.5, "1kg", images,signaletique,"Url_z",
+                Produit patate = new Produit("patate",  "Des patates",  1.5, 1.5,"1kg", images,signaletique,"Url_z",
                                 "De l'amour et des calins", "pollens", "E3000, T69", "Froid", tabNutri);
                 produits.add(patate);
                 produits.add(patate);              
