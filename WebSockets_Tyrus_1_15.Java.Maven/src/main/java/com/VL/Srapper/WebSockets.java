@@ -64,7 +64,10 @@ public class WebSockets {
                 final HtmlButton button;
                 button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
                 page = button.click();
-                
+                List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
+                System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
+                HtmlElement marque = page.getFirstByXPath("//strong[@class='color6 ']");
+                System.out.println(marque.asText());
                 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
