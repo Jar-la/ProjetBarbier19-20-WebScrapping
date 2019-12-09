@@ -20,14 +20,21 @@ import java.io.IOException;
 
 
 public class WebSockets {
-
+    
     /**
      * Danger : il faut que le constructeur de 'My_ServerEndpoint' soit bien
      * accessible par le serveur WebSockets. Ne pas oublier 'static'!
      */
     @javax.websocket.server.ServerEndpoint(value = "/WebSockets_illustration")
     public static class My_ServerEndpoint {
-
+        
+        private WebClient client = new WebClient();
+        String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
+        HtmlPage page = null;
+        HtmlForm form = null;
+        HtmlTextInput textField = null;
+        
+        
         @javax.websocket.OnClose
         public void onClose(javax.websocket.Session session, javax.websocket.CloseReason close_reason) {
             System.out.println("onClose: " + close_reason.getReasonPhrase());
@@ -39,7 +46,7 @@ public class WebSockets {
         }
 
         @javax.websocket.OnMessage
-        public void onMessage(javax.websocket.Session session, String message) {
+        public void onMessage(javax.websocket.Session session, String message) throws IOException {
             JSONObject jMessage= new JSONObject(message);       //convertir le message en object JSON
             //System.out.println("jMessage.has(\"Response\")= " + jMessage.has("Response"));
             //System.out.println("jMessage.has(\"Request\")= " + jMessage.has("Request"));
@@ -51,6 +58,13 @@ public class WebSockets {
             }else if (jMessage.has("Request")){
                 String query = jMessage.getString("Request");
                 int qty = jMessage.getInt("Quantity");
+                
+                
+                textField.type(query);
+                final HtmlButton button;
+                button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
+                page = button.click();
+                
                 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
@@ -95,40 +109,20 @@ public class WebSockets {
         }
 
         @javax.websocket.OnOpen
-
         public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException {
             System.out.println("OnOpen... " + ec.getUserProperties().get("Author"));
-            session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
-            String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
-            WebClient client = new WebClient();
-            client.getOptions().setCssEnabled(false);
-            client.getOptions().setJavaScriptEnabled(false);
-
-            /*try{
-
-            HtmlPage page = (HtmlPage)client.getPage(baseUrl);
-
-            final HtmlForm form = (HtmlForm) page.getElementById("search");
-
-            session.getBasicRemote().sendText(page.asXml());
-
+            //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
+            try{
+                client.getOptions().setCssEnabled(false);
+                client.getOptions().setJavaScriptEnabled(false);
+                page = (HtmlPage)client.getPage(baseUrl);
+                form = (HtmlForm) page.getElementById("search");
+                textField = form.getInputByName("query");
             }
-
             catch(FailingHttpStatusCodeException | IOException e){
-
-            }*/
-
- 
-            HtmlPage page = (HtmlPage)client.getPage(baseUrl);
-            final HtmlForm form = (HtmlForm) page.getElementById("search");
-            final HtmlTextInput textField = form.getInputByName("query");
-            textField.type("Nutella");
-            final HtmlButton button;
-            button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
-            page = button.click();         
-            //session.getBasicRemote().sendText(page.asXml());
+                
+            }
         }
-
     }
 
     public static void main(String[] args) {
