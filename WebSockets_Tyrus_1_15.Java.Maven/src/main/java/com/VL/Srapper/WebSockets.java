@@ -1,6 +1,17 @@
 package com.VL.Srapper;
 
 //https://tyrus-project.github.io/documentation/1.12/user-guide.html#getting-started
+
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+
+import com.gargoylesoftware.htmlunit.html.*;
+import java.io.IOException;
+
+
+
 public class WebSockets {
 
     /**
@@ -29,6 +40,28 @@ public class WebSockets {
         public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException {
             System.out.println("OnOpen... " + ec.getUserProperties().get("Author"));
             session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
+            String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
+            WebClient client = new WebClient();
+            client.getOptions().setCssEnabled(false);
+            client.getOptions().setJavaScriptEnabled(false);
+            /*try{
+            HtmlPage page = (HtmlPage)client.getPage(baseUrl);
+            final HtmlForm form = (HtmlForm) page.getElementById("search");
+            session.getBasicRemote().sendText(page.asXml());
+            }
+            catch(FailingHttpStatusCodeException | IOException e){
+            }*/
+            
+            HtmlPage page = (HtmlPage)client.getPage(baseUrl);
+            final HtmlForm form = (HtmlForm) page.getElementById("search");
+            final HtmlTextInput textField = form.getInputByName("query");
+            textField.type("Nutella");
+            final HtmlButton button;
+            button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
+            page = button.click();
+            
+            session.getBasicRemote().sendText(page.asXml());
+            
         }
     }
 
