@@ -1,6 +1,15 @@
 "use strict";
 
-window.onload = () => {};
+window.onload = () => {
+  // Changer l'affichage du nombre d'article en fonction du slidder.
+  let sliderArticles = document.getElementById("rangeNbArticle");
+  let outputArticles = document.getElementById("nbArticles");
+  outputArticles.innerHTML = sliderArticles.value;
+
+  sliderArticles.oninput = function() {
+    outputArticles.innerHTML = this.value;
+  };
+};
 
 // Tested with Tyrus 1.15 WebSockets Java library
 let service = new WebSocket("ws://localhost:1963/FranckBarbier/WebSockets_illustration");
@@ -32,7 +41,9 @@ service.onerror = () => {
   window.alert("service.onerror...");
 };
 
+// Création de la requette pour les articles
 function request() {
+  console.log(document.getElementById("s").value);
   let search = document.getElementById("s").value;
   let searchReg = search.replace(/[^a-z0-9]/gi, "");
   let quantity = 1;
