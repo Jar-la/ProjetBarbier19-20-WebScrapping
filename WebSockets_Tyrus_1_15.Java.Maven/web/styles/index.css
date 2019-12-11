@@ -1,0 +1,138 @@
+.body {
+  
+  background-color: rgb(249, 249, 255);
+  display: grid;
+  grid-gap: 5px;
+  grid-template-areas:
+    "Top"
+    "Nav"
+    "App";
+}
+@media (min-width: 915px) {
+  .body {
+    grid-template-columns: 230px auto;
+    grid-template-areas:
+      "Top Top"
+      "Nav App";
+  }
+}
+
+.Top {
+  grid-area: Top;
+  background-color: rgb(171, 171, 185);
+  text-align: center;
+}
+
+.Nav {
+  grid-area: Nav; 
+  text-align: center;
+  border-right: 2px solid darkgray;
+  
+}
+
+.App {
+  grid-area: App;
+  display: grid;
+  gap: 10px;
+  justify-content: center;
+  grid-template-columns: auto;
+}
+@media (min-width: 670px) {
+  .App {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+@media (min-width: 1250px) {
+  .App {
+    grid-template-columns: repeat(3, auto);
+  }
+}
+@media (min-width: 1580px) {
+  .App {
+    grid-template-columns: repeat(4, auto);
+  }
+}
+@media (min-width: 1840px) {
+  .App {
+    grid-template-columns: repeat(5, auto);
+  }
+}
+@media (min-width: 2160px) {
+  .App {
+    grid-template-columns: repeat(6, auto);
+  }
+}
+/* IN APP  */
+
+.hidden {
+  display: none;
+}
+.articleContainerExtended {
+  background-color: white;
+  border :1px solid gray;
+  grid-column: span 1;
+  display: grid;
+}
+@media (min-width: 670px) {
+  .articleContainerExtended {
+    grid-column: span 2;
+    width: 650px;
+    gap: 5px;
+    grid-template-columns: 320px auto;
+  }
+}
+
+.articleContainerRetracted {
+  grid-column: span 1;
+  border :1px solid gray;
+  display: grid;
+  width: 320px;
+  grid-template-columns: 320px;
+}
+
+.alwaysVisible {
+  display: grid;
+  grid-template-columns: repeat(6, 16.66666%);
+}
+
+.imageArticle {
+  height: 320px;
+  width: 320px;
+  grid-column: 1/6;
+}
+.nomArticle {
+  grid-column: 1/6;
+}
+
+.prixArticle {
+  grid-column: 6/7;
+  text-align: end;
+}
+.condArticles {
+  grid-column: 1/2;
+}
+.prixKgArticle {
+  grid-column: 3/7;
+  text-align: end;
+}
+
+.descArticle {
+  grid-column: 1/7;
+  text-align: left;
+}
+
+.signsArticles {
+  grid-column: 1/4;
+}
+
+.signArticles {
+  height: 30px;
+}
+
+.nutriScoreArticle {
+  grid-column: 6;
+}
+
+.imgNutriScoreArticle {
+  height: 30px;
+}
