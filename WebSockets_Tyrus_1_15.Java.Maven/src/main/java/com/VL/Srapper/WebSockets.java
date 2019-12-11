@@ -66,8 +66,19 @@ public class WebSockets {
                 page = button.click();
                 List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
                 System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
-                HtmlElement marque = page.getFirstByXPath("//strong[@class='color6 ']");
-                System.out.println(marque.asText());
+                List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
+                System.out.println(marque.get(0).asText());
+                List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
+                System.out.println(prix.get(0).asText());
+                
+                
+                HtmlAnchor lienArticle;
+                HtmlPage page2;
+                lienArticle = page.getFirstByXPath("//a[@class='img POP_open']");
+                page2 = lienArticle.click();
+                HtmlElement aupif = page2.getFirstByXPath("//div[@class='cnt-info']");
+                System.out.println(aupif.asText());
+                
                 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
