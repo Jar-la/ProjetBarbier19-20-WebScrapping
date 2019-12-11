@@ -1,8 +1,7 @@
 .body {
-  
-  background-color: rgb(249, 249, 255);
+  background-color: #dce3e6;
   display: grid;
-  grid-gap: 5px;
+  grid-gap: 1em;
   grid-template-areas:
     "Top"
     "Nav"
@@ -19,17 +18,72 @@
 
 .Top {
   grid-area: Top;
-  background-color: rgb(171, 171, 185);
   text-align: center;
+  background-color: #dae4f0;
+  box-shadow: 0 0.3em 0.5em rgb(41, 41, 41);
 }
 
 .Nav {
-  grid-area: Nav; 
-  text-align: center;
-  border-right: 2px solid darkgray;
-  
+  grid-area: Nav;
+  background-color: #dae4f0;
+  box-shadow: 0.3em 0.3em 0.5em rgb(41, 41, 41);
 }
 
+.Search {
+  margin-top: 20px;
+  margin-left: 3px;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  padding: 6px 00px 6px 3px;
+}
+.button{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 8px 10px;
+  display: inline-block;
+}
+.button:hover {
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.24), 0 2px 2px 0 rgba(0,0,0,0.19);
+}
+
+#nbArticles {
+  text-align: center;
+  margin: 10px;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 98%;
+  height: 10px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #4CAF50;
+  cursor: pointer;
+}
 .App {
   grid-area: App;
   display: grid;
@@ -69,9 +123,10 @@
 }
 .articleContainerExtended {
   background-color: white;
-  border :1px solid gray;
+  border: 1px solid gray;
   grid-column: span 1;
   display: grid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 @media (min-width: 670px) {
   .articleContainerExtended {
@@ -84,10 +139,11 @@
 
 .articleContainerRetracted {
   grid-column: span 1;
-  border :1px solid gray;
+  border: 1px solid gray;
   display: grid;
   width: 320px;
   grid-template-columns: 320px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .alwaysVisible {
