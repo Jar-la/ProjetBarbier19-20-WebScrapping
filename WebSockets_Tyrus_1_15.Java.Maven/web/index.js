@@ -82,7 +82,7 @@ window.onload = () => {
                 <img class="imgNutriScoreArticle" src="${
                   article.nutScore
                 }" alt="nutriScore">
-              </div>      
+              </div>
             </div>
             
             <div class= "hidden" id="h${i}">
