@@ -77,8 +77,10 @@ public class WebSockets {
                 lienArticle = page.getFirstByXPath("//a[@class='img POP_open']");
                 page2 = lienArticle.click();
                 HtmlElement aupif = page2.getFirstByXPath("//div[@class='cnt-info']");
-                System.out.println(aupif.asText());
+                System.out.println(aupif.asText().replace("Le produit","").replaceAll("[\r\n]+", " "));
                 
+                //System.out.println(page.asXml());
+
                 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
@@ -128,7 +130,9 @@ public class WebSockets {
             //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
                 client.getOptions().setCssEnabled(false);
-                client.getOptions().setJavaScriptEnabled(false);
+                client.getOptions().setJavaScriptEnabled(true);
+                client.getOptions().setRedirectEnabled(true);
+                client.getOptions().setThrowExceptionOnScriptError(false);
                 page = (HtmlPage)client.getPage(baseUrl);
                 form = (HtmlForm) page.getElementById("search");
                 textField = form.getInputByName("query");
