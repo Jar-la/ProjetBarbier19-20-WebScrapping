@@ -63,7 +63,7 @@ public class WebSockets {
                 
 
                 
-                /*
+                
                 textField.type(query);
                 final HtmlButton button;
                 button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
@@ -86,7 +86,7 @@ public class WebSockets {
                 //System.out.println(page.asXml());
 
                 
-                */
+                
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
                 
@@ -140,7 +140,7 @@ public class WebSockets {
             //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
                 client.getOptions().setCssEnabled(false);
-                client.getOptions().setJavaScriptEnabled(true);
+                client.getOptions().setJavaScriptEnabled(false);
                 client.getOptions().setRedirectEnabled(true);
                 client.getOptions().setThrowExceptionOnScriptError(false);
                 page = (HtmlPage)client.getPage(baseUrl);
