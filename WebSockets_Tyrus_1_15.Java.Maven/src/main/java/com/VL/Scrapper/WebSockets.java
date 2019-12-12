@@ -1,4 +1,4 @@
-package com.VL.Srapper;
+package com.VL.Scrapper;
 
 //https://tyrus-project.github.io/documentation/1.12/user-guide.html#getting-started
 
