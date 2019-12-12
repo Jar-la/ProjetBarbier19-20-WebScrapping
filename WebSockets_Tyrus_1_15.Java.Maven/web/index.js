@@ -1,5 +1,6 @@
 "use strict";
 
+var nbArticlesAffiche = 0;
 window.onload = () => {
   // Tested with Tyrus 1.15 WebSockets Java library
   let service = new WebSocket(
@@ -7,7 +8,6 @@ window.onload = () => {
   );
   service.onmessage = event => {
     //console.log("Message from Java: " + event.data);
-
     let productArray = JSON.parse(event.data);
     Affiche(productArray);
   };
@@ -30,26 +30,46 @@ window.onload = () => {
 
   //Fonctions de modification de l'affichage--------------------------------------------------
 
+  function getCells(data, type) {
+    return data.map(cell => `<${type}>${cell}</${type}>`).join("");
+  }
+
+  function createBody(data) {
+    return data.map(row => `<tr>${getCells(row, "td")}</tr>`).join("");
+  }
+
+  function createTable(data) {
+    const [headings, ...rows] = data;
+    return `
+      <table>
+        <thead>${getCells(headings, "th")}</thead>
+        <tbody>${createBody(rows)}</tbody>
+      </table>
+    `;
+  }
+
   function Affiche(Articles) {
     let htlmArticles = "";
+    let i = 0;
     for (const article of Articles) {
-      console.log(article.pics.map((url, index) => `${url}`));
       htlmArticles += `
-          <div class="articleContainerRetracted">
+          <div class="articleContainerRetracted" id="${i}" >
             <div class="alwaysVisible">
               <div class="imagesArticle">
                 ${article.pics
                   .map(
                     (url, index) =>
-                      `<img class="imageArticle" src="${url}" alt ="image${index}" />`
+                      `<img class="imageArticle" src="${url}" alt ="image${index}"  />`
                   )
                   .join("\n                ")}
               </div>
-              <div class= "nomArticle" > ${article.name} </div>
-              <div class= "prixArticle" > ${article.price.toFixed(2)}€ </div>
-              <div class= "condArticles" > ${article.pack} </div>
-              <div class= "prixKgArticle" > ${article.pricePerKg.toFixed(2)}€ </div>
-              <div class= "descArticle" > ${article.desc} </div>
+              <div class= "nomArticle" > Nom:${article.name} </div>
+              <div class= "prixArticle" > Prix:${article.price.toFixed(2)}€ </div>
+              <div class= "condArticles" > Quantité:${article.pack} </div>
+              <div class= "prixKgArticle" > Prix/kg:${article.pricePerKg.toFixed(
+                2
+              )}€ </div>
+              <div class= "descArticle" > Description: <br/>${article.desc} </div>
               <div class="signsArticles">
                 ${article.sign
                   .map(
@@ -64,37 +84,49 @@ window.onload = () => {
                 }" alt="nutriScore">
               </div>
             </div>
-
-            <div class= "hidden">
-              <div class= "ingreArticles" > ${article.ingr} </div>
-              <div class= "allergenesArticles" > ${article.allerg} </div>
-              <div class= "addArticle" > ${article.addit} </div>
-              <div class= "presArticle" > ${article.pres} </div>
+            
+            <div class= "hidden" id="h${i}">
+              <div class= "ingreArticles" >Ingredients: <br/> ${article.ingr} </div>
+              <div class= "allergenesArticles" >Allergènes: <br/> ${article.allerg} </div>
+              <div class= "addArticle" >Additifs: </br> ${article.addit} </div>
+              <div class= "presArticle" >Conservation: </br> ${article.pres} </div>
               <div class= "tableauxInfoNutritionel" >
-                <table>
-                ${article.tabNut
-                  .map(
-                    (col, index) =>
-                      `<td>
-                      ${col
-                        .map((row, index) => `<tr>${row}</tr>`)
-                        .join("\n                      ")}
-                    <td>`
-                  )
-                  .join("\n                ")}}
-                  </table>
+               ${createTable(article.tabNut)}
               </div>
             </div>
           </div>
-
-
+                        
       `;
+      i -= -1;
     }
-    let app = document.getElementById("AppContainer");
-    app.innerHTML = htlmArticles;
+    document.getElementById("AppContainer").innerHTML = htlmArticles;
+    nbArticlesAffiche = --i;
+
+    for (let j = i; j >= 0; j--) {
+      document.getElementById(j).addEventListener("click", etendre);
+    }
   }
 
   // Fonctions de L'interface---------------------------------------------------------------
+
+  //Change la façons d'afficher l'article cliqué en changeant sa classe
+  function etendre() {
+    //console.log(`h${this.id}`);
+    this.classList.remove("articleContainerRetracted");
+    this.classList.add("articleContainerExtended");
+    document.getElementById(`h${this.id}`).classList.remove("hidden");
+    document.getElementById(`h${this.id}`).classList.add("visibleWhenExtended");
+    this.removeEventListener("click", etendre);
+    this.addEventListener("click", retracter);
+  }
+  function retracter() {
+    this.classList.remove("articleContainerExtended");
+    this.classList.add("articleContainerRetracted");
+    document.getElementById(`h${this.id}`).classList.remove("visibleWhenExtended");
+    document.getElementById(`h${this.id}`).classList.add("hidden");
+    this.removeEventListener("click", retracter);
+    this.addEventListener("click", etendre);
+  }
 
   // Changer l'affichage du nombre d'article en fonction du slidder.
   let sliderArticles = document.getElementById("rangeNbArticle");

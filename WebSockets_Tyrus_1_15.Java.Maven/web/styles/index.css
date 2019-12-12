@@ -38,8 +38,8 @@
   background-color: white;
   padding: 6px 00px 6px 3px;
 }
-.button{
-  background-color: #4CAF50; /* Green */
+.button {
+  background-color: #4caf50; /* Green */
   border: none;
   border-radius: 4px;
   color: white;
@@ -47,7 +47,7 @@
   display: inline-block;
 }
 .button:hover {
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.24), 0 2px 2px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.24), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
 }
 
 #nbArticles {
@@ -61,8 +61,8 @@
   background: #d3d3d3;
   outline: none;
   opacity: 0.8;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider:hover {
@@ -74,14 +74,14 @@
   appearance: none;
   width: 15px;
   height: 15px;
-  background: #4CAF50;
+  background: #4caf50;
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
   width: 15px;
   height: 15px;
-  background: #4CAF50;
+  background: #4caf50;
   cursor: pointer;
 }
 .App {
@@ -157,11 +157,11 @@
   grid-column: 1/6;
 }
 .nomArticle {
-  grid-column: 1/6;
+  grid-column: 1/5;
 }
 
 .prixArticle {
-  grid-column: 6/7;
+  grid-column: 5/7;
   text-align: end;
 }
 .condArticles {
@@ -191,4 +191,21 @@
 
 .imgNutriScoreArticle {
   height: 30px;
+}
+
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 15px;
 }
