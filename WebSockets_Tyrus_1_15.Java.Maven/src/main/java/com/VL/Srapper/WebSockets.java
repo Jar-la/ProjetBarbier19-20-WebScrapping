@@ -38,10 +38,12 @@ public class WebSockets {
         @javax.websocket.OnClose
         public void onClose(javax.websocket.Session session, javax.websocket.CloseReason close_reason) {
             System.out.println("onClose: " + close_reason.getReasonPhrase());
+            System.out.println("Message onClose: " + close_reason.toString());
         }
 
         @javax.websocket.OnError
         public void onError(javax.websocket.Session session, Throwable throwable) {
+            System.out.println(" message on Error = " + throwable.toString() );
             System.out.println("onError: " + throwable.getMessage());
         }
 
@@ -50,7 +52,7 @@ public class WebSockets {
             JSONObject jMessage= new JSONObject(message);       //convertir le message en object JSON
             //System.out.println("jMessage.has(\"Response\")= " + jMessage.has("Response"));
             //System.out.println("jMessage.has(\"Request\")= " + jMessage.has("Request"));
-            
+
             if ( jMessage.has("Response") ){
                 
                 System.out.println("Message de JavaScript :" + jMessage.get("Response"));
@@ -59,7 +61,9 @@ public class WebSockets {
                 String query = jMessage.getString("Request");
                 int qty = jMessage.getInt("Quantity");
                 
+
                 
+                /*
                 textField.type(query);
                 final HtmlButton button;
                 button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
@@ -82,16 +86,18 @@ public class WebSockets {
                 //System.out.println(page.asXml());
 
                 
+                */
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
                 
                 /*  TEST AJOUT PRODUIT  */
                 List<String> images = new ArrayList<>();
-                images.add("URL1");
-                images.add("URL2");
+                images.add("https://smedia.productpage.io/product/picture/exportable/197dff15-bca7-44d1-bd04-db6960d04591/512x512.jpg");
+                images.add("https://smedia.productpage.io/product/picture/exportable/38a7b1fd-1da6-4dc7-bf97-704961c74d28/512x512.jpg");
                 List<String> signaletique = new ArrayList<>();
-                signaletique.add("URL_A");
-                signaletique.add("URL_B");
+                signaletique.add("https://smedia.productpage.io/api/1/concept/19125/picture/logo/original.png");
+                signaletique.add("https://smedia.productpage.io/api/1/concept/19133/picture/logo/original.png");
+                signaletique.add("https://smedia.productpage.io/api/1/concept/10262/picture/logo/original.png");
                 List<String> colone1 = new ArrayList<>();
                 colone1.add("Informations nutritionnelles");
                 colone1.add("valeur énergétique (kJ)");
@@ -103,8 +109,11 @@ public class WebSockets {
                 List<List<String>> tabNutri = new ArrayList<>();
                 tabNutri.add(colone1);
                 tabNutri.add(colone2);
-                Produit patate = new Produit("patate",  "Des patates",  1.5, 1.5,"1kg", images,signaletique,"Url_z",
-                                "De l'amour et des calins", "pollens", "E3000, T69", "Froid", tabNutri);
+                Produit patate = new Produit("Captain Morgan Original Spiced Gold",  "Des saveurs de vanille et de caramel délicieusement épicé qui puisent leurs orgines\n" +
+"          dansles recettes élaborées au 17ème siècle par les pirates et corsaires, qui avaient pour habitude de macérer\n" +
+"          les épices dans leur rhum pour en développer les arômes. Un vieillissement en fût de chêne lui donne ensuite\n" +
+"          sa robe dorée et développe ses arômes inimitables",  15.90, 22.71,"70cL", images,signaletique,"https://smedia.productpage.io/api/1/referential/nutriscore/nutriScore_A.png",
+                                "De l'amour et des calins", "pollens", "E3000, T69", "Garder au frais", tabNutri);
                 produits.add(patate);
                 produits.add(patate);              
                 /* Fin test */
@@ -127,6 +136,7 @@ public class WebSockets {
         @javax.websocket.OnOpen
         public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException {
             System.out.println("OnOpen... " + ec.getUserProperties().get("Author"));
+            System.out.println("OnOpen string = " + ec.toString());
             //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
                 client.getOptions().setCssEnabled(false);
@@ -146,7 +156,7 @@ public class WebSockets {
     public static void main(String[] args) {
 
         java.util.Map<String, Object> user_properties = new java.util.HashMap();
-        user_properties.put("Author", "");
+        user_properties.put("Author", "Lafon_Vanootegem");
 
         org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 1963, "/FranckBarbier", user_properties /* or 'null' */, My_ServerEndpoint.class);
         try {
