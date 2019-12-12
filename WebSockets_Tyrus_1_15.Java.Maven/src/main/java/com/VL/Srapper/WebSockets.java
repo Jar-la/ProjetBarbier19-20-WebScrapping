@@ -19,6 +19,8 @@ import com.gargoylesoftware.htmlunit.html.*;
 import java.io.IOException;
 
 
+
+
 public class WebSockets {
     
     /**
@@ -146,6 +148,10 @@ public class WebSockets {
                 page = (HtmlPage)client.getPage(baseUrl);
                 form = (HtmlForm) page.getElementById("search");
                 textField = form.getInputByName("query");
+                        
+                System.setProperty("webdriver.gecko.driver","./geckodriver-v0.26.0-win64/geckodriver.exe");
+                Scrapper scrap = new Scrapper();
+                scrap.search("Tomates");
             }
             catch(FailingHttpStatusCodeException | IOException e){
                 
