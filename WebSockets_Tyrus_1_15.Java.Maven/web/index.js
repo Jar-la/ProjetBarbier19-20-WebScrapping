@@ -62,9 +62,9 @@ window.onload = () => {
                 <img class="imgNutriScoreArticle" src="${
                   article.nutScore
                 }" alt="nutriScore">
-              </div>      
+              </div>
             </div>
-            
+
             <div class= "hidden">
               <div class= "ingreArticles" > ${article.ingr} </div>
               <div class= "allergenesArticles" > ${article.allerg} </div>
@@ -75,7 +75,7 @@ window.onload = () => {
                 ${article.tabNut
                   .map(
                     (col, index) =>
-                      `<td> 
+                      `<td>
                       ${col
                         .map((row, index) => `<tr>${row}</tr>`)
                         .join("\n                      ")}
@@ -86,8 +86,8 @@ window.onload = () => {
               </div>
             </div>
           </div>
-                        
-      
+
+
       `;
     }
     let app = document.getElementById("AppContainer");
