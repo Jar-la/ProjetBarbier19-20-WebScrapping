@@ -27,11 +27,7 @@ public class WebSockets {
     @javax.websocket.server.ServerEndpoint(value = "/WebSockets_illustration")
     public static class My_ServerEndpoint {
         
-        private WebClient client = new WebClient();
-        String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
-        HtmlPage page = null;
-        HtmlForm form = null;
-        HtmlTextInput textField = null;
+        Scrapper scrap = null;
         
         
         @javax.websocket.OnClose
@@ -60,31 +56,7 @@ public class WebSockets {
                 String query = jMessage.getString("Request");
                 int qty = jMessage.getInt("Quantity");
                 
-
-                
-                
-                textField.type(query);
-                final HtmlButton button;
-                button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
-                page = button.click();
-                List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
-                System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
-                List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
-                System.out.println(marque.get(0).asText());
-                List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
-                System.out.println(prix.get(0).asText());
-                
-                
-                HtmlAnchor lienArticle;
-                HtmlPage page2;
-                lienArticle = page.getFirstByXPath("//a[@class='img POP_open']");
-                page2 = lienArticle.click();
-                HtmlElement aupif = page2.getFirstByXPath("//div[@class='cnt-info']");
-                System.out.println(aupif.asText().replace("Le produit","").replaceAll("[\r\n]+", " "));
-                
-                //System.out.println(page.asXml());
-
-                
+                scrap.Search(query);
                 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
@@ -138,18 +110,11 @@ public class WebSockets {
             System.out.println("OnOpen string = " + ec.toString());
             //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
-                client.getOptions().setCssEnabled(false);
-                client.getOptions().setJavaScriptEnabled(false);
-                client.getOptions().setRedirectEnabled(true);
-                client.getOptions().setThrowExceptionOnScriptError(false);
-                page = (HtmlPage)client.getPage(baseUrl);
-                form = (HtmlForm) page.getElementById("search");
-                textField = form.getInputByName("query");
-                        
-            
+                scrap = new Scrapper();
+                
             }
             catch(FailingHttpStatusCodeException | IOException e){
-                
+            
             }
         }
     }
