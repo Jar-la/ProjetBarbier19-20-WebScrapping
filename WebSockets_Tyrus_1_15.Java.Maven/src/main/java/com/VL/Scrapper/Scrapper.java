@@ -55,28 +55,29 @@ public class Scrapper {
         
         List <JSONObject> jsonProduits = new ArrayList<>();
         
+        List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
+        List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
+        List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
+        
         for(int i = 0; i <= qty; i++)
         {
             Produit prod = new Produit();
           
-            List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
             // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
             prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
-
-            List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
+            
             // System.out.println(marque.get(0).asText());
             prod.setBrand(marque.get(i).asText());
 
-            List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
             // System.out.println(prix.get(0).asText());
             prod.setPrice(prix.get(i).asText());
-            
             
             page2 = lienArticle.get(i).click();
             HtmlElement desc = page2.getFirstByXPath("//div[@class='cnt-info']");
             prod.setDesc(desc.asText().replace("Le produit","").replaceFirst("\r\n+", ""));
             
             jsonProduits.add(prod.toJson());
+
         }
         
         JSONArray jProduits = new JSONArray(jsonProduits);  
