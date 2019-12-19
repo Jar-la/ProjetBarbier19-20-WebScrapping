@@ -1,5 +1,6 @@
 .body {
-  background-color: #dce3e6;
+  font-family:Verdana, Geneva, Arial;
+  _background-color: #dce3e6;
   display: grid;
   grid-gap: 1em;
   grid-template-areas:
@@ -19,16 +20,20 @@
 .Top {
   grid-area: Top;
   text-align: center;
-  background-color: #dae4f0;
+  _background-color: #dae4f0;
   box-shadow: 0 0.3em 0.5em rgb(41, 41, 41);
 }
 
 .Nav {
   grid-area: Nav;
-  background-color: #dae4f0;
+  _background-color: #dae4f0;
   box-shadow: 0.3em 0.3em 0.5em rgb(41, 41, 41);
 }
-
+@media (min-width: 915px) {
+  .Nav {
+    height: 570px;
+  }
+}
 .Search {
   margin-top: 20px;
   margin-left: 3px;
@@ -122,7 +127,7 @@
   display: none;
 }
 .articleContainerExtended {
-  background-color: white;
+  _background-color: white;
   border: 1px solid gray;
   grid-column: span 1;
   display: grid;
