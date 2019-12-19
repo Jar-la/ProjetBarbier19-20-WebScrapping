@@ -55,7 +55,7 @@ public class WebSockets {
                 List<Produit> produits = new ArrayList<>();
                 
                 /*  TEST AJOUT PRODUIT  */
-                
+                /*
                 List<String> images = new ArrayList<>();
                 images.add("https://smedia.productpage.io/product/picture/exportable/197dff15-bca7-44d1-bd04-db6960d04591/512x512.jpg");
                 images.add("https://smedia.productpage.io/product/picture/exportable/38a7b1fd-1da6-4dc7-bf97-704961c74d28/512x512.jpg");
@@ -80,7 +80,8 @@ public class WebSockets {
 "          sa robe dorée et développe ses arômes inimitables",  "15.90", 22.71,"70cL", images,signaletique,"https://smedia.productpage.io/api/1/referential/nutriscore/nutriScore_A.png",
                                 "De l'amour et des calins", "pollens", "E3000, T69", "Garder au frais", tabNutri);
                 produits.add(patate);
-                produits.add(patate);              
+                produits.add(patate);    
+                */
                 /* Fin test */
                 
                 //Trasfert la list de produit dans une liste d'objets JSON

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Alexa
+ * @author Alexandre & Edwin
  */
 
 public class Produit {
@@ -39,7 +39,7 @@ public class Produit {
     /**
      *  The price per Kg of the product.
      */
-    private Double pricePerKg;
+    private String pricePerKg;
 
     /**
      * The packaging of the product.
@@ -126,7 +126,7 @@ public class Produit {
      * @param pres          // List of all preservatives
      * @param tabNut        // Table of nutritional values
      */
-    Produit(String name, String brand, String desc, String price, Double pricePerKg,  String pack, List<String> pics, 
+    Produit(String name, String brand, String desc, String price, String pricePerKg,  String pack, List<String> pics, 
             List<String> sign, String nutriScore, String ingr, String aller, 
             String addit, String pres, List<List<String>> tabNut){
         this.name = name;
@@ -165,7 +165,7 @@ public class Produit {
         this.price = price;
     }
 
-    public void setPricePerKg(Double pricePerKg){
+    public void setPricePerKg(String pricePerKg){
         this.pricePerKg = pricePerKg;
     }
     
