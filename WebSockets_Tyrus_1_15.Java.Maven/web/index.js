@@ -141,7 +141,7 @@ window.onload = () => {
     let searchReg = search.replace(/[^a-z0-9]/gi, "");
     // Envoie la saisie de l'utilisateur fitré et la quantité si non chaine vide et recherche différente
     if (searchReg != "" && searchReg != oldRequest) {
-      oldRequest = searchReg;
+      //oldRequest = searchReg;
       let data = service.send(
         JSON.stringify({ Request: `${searchReg}`, Quantity: `${quantity}` })
       );
