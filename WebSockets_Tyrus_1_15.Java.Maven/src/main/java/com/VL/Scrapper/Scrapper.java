@@ -56,12 +56,14 @@ public class Scrapper {
         List <JSONObject> jsonProduits = new ArrayList<>();
         
         List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
-        List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
+        List<HtmlElement> marque = page.getByXPath("//a[@class='POP_open']/strong");
         List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
         List<HtmlElement> prixKiloMasse = page.getByXPath("//span[@class='info']");
         
-        for(int i = 0; i < qty; i++)
+        int i = 0;
+        while(i < qty && nodes.size()>i)
         {
+            
             Produit prod = new Produit();
           
             // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
@@ -115,10 +117,10 @@ public class Scrapper {
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
             
             jsonProduits.add(prod.toJson());
+            i++;
         }
         
-        JSONArray jProduits = new JSONArray(jsonProduits);  
-        System.out.println("JSONArray.toString" + jProduits.toString());
+        JSONArray jProduits = new JSONArray(jsonProduits);
         
         return(jProduits);
     }
