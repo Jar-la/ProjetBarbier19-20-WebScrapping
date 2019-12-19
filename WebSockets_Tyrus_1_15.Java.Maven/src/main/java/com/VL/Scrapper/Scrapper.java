@@ -78,7 +78,6 @@ public class Scrapper {
             prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r\n+", ""));
             
             
-            
             //prod.setIngr(details.get(3).asText());
             //String splitArray_ingr[] = details.get(3).asText().split("[.]");
            // System.out.println(splitArray_ingr[0]);
@@ -88,8 +87,8 @@ public class Scrapper {
             prod.setPack(splitArray[0]);
             prod.setPricePerKg(splitArray[2]);
             
-            HtmlElement picture = page2.getFirstByXPath("//img");
-            prod.setPic("https:" + picture.getAttributeNode("src").getNodeValue());
+            HtmlElement picture = page2.getFirstByXPath("//a[@class'zoom-img1']");
+            prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
             
             jsonProduits.add(prod.toJson());
         }
