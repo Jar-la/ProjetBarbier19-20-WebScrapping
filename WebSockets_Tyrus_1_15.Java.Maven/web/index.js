@@ -197,7 +197,7 @@ window.onload = () => {
     let quantity = sliderArticles.value;
     let search = document.getElementById("s").value;
     // On enleve tous ce qui n'est pas un chiffre ou une lettre
-    let searchReg = search.replace(/[^a-z0-9]/gi, "");
+    let searchReg = search.replace(/[^a-z0-9 ]/gi, "");
     // Envoie la saisie de l'utilisateur fitré et la quantité si non chaine vide et recherche différente
     if (searchReg != "" && searchReg != oldRequest) {
       //oldRequest = searchReg;

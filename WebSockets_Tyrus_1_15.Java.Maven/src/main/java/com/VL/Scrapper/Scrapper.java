@@ -79,17 +79,37 @@ public class Scrapper {
             
             
             //prod.setIngr(details.get(3).asText());
-            if(details.size()>=3)
+            if(details.size()>=2)
             {
-                String splitArray_ingr[] = details.get(3).asText().replace("Que contient le produit ?","").replaceFirst("\r\n+", "").split("[.]");
-                prod.setIngr(splitArray_ingr[0]);
+                boolean isIngr = false;
+                for(int j = 1; j<details.size(); j++){
+                    if(details.get(j).asText().contains("Que contient le produit ?")){
+                        String splitArray_ingr[] = details.get(j).asText().replace("Que contient le produit ?","").replaceFirst("\r\n+", "").split("[.]");
+                        if (splitArray_ingr[0].length()>5){
+                            prod.setIngr(splitArray_ingr[0]);
+                            isIngr = true;
+                        }else{
+                            prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
+                        }
+                    }
+                }
+                if(!isIngr){
+                    prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
+                }
+                
             }else{
                 prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
             }
             
-            String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
-            prod.setPack(splitArray[0]);
-            prod.setPricePerKg(splitArray[2]);
+            if(prixKiloMasse.get(i).asText().contains(" | "))
+            {
+                String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
+                prod.setPack(splitArray[0]);
+                prod.setPricePerKg(splitArray[2]);
+            }else{
+                prod.setPack(prixKiloMasse.get(i).asText());
+            }
+            
             
             HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
