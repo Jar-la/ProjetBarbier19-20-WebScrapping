@@ -59,8 +59,9 @@ public class Scrapper {
         List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
         List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
         List<HtmlElement> prixKiloMasse = page.getByXPath("//span[@class='info']");
+        List<HtmlElement> image = page.getByXPath("//img[@itemprop='image']");
         
-        for(int i = 0; i <= qty; i++)
+        for(int i = 0; i < qty; i++)
         {
             Produit prod = new Produit();
           
@@ -80,6 +81,7 @@ public class Scrapper {
             String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
             prod.setPack(splitArray[0]);
             prod.setPricePerKg(splitArray[2]);
+            prod.setPic("https:" + image.get(i).getAttributeNode("src").getNodeValue());
             
             jsonProduits.add(prod.toJson());
 

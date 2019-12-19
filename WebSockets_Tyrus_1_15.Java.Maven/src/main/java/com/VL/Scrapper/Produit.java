@@ -47,9 +47,9 @@ public class Produit {
     private String pack;
     
     /**
-     * Urls to Pictures of the product.
+     * Url to Picture of the product.
      */
-    private List<String> pics;
+    private String picture;
     
     /**
      * Urls to Signs images of the product.
@@ -98,7 +98,7 @@ public class Produit {
         price = null;
         pricePerKg =null;
         pack = null;
-        pics = null;
+        picture = null;
         sign = null;
         nutriScore = null;
         ingr = null;
@@ -117,7 +117,7 @@ public class Produit {
      * @param price         // Price
      * @param pricePerKg    // Price per Kg
      * @param pack          // Packaging
-     * @param pics          // Urls of pictures 
+     * @param picture       // Url of picture 
      * @param sign          // Urls of signaltic pictures
      * @param nutriScore    // Url of the nutri score image
      * @param ingr          // List of all ingredient
@@ -126,7 +126,7 @@ public class Produit {
      * @param pres          // List of all preservatives
      * @param tabNut        // Table of nutritional values
      */
-    Produit(String name, String brand, String desc, String price, String pricePerKg,  String pack, List<String> pics, 
+    Produit(String name, String brand, String desc, String price, String pricePerKg,  String pack, String pic, 
             List<String> sign, String nutriScore, String ingr, String aller, 
             String addit, String pres, List<List<String>> tabNut){
         this.name = name;
@@ -135,7 +135,7 @@ public class Produit {
         this.price = price;
         this.pricePerKg = pricePerKg;
         this.pack = pack;
-        this.pics = pics;
+        this.picture = pic;
         this.sign = sign;
         this.nutriScore= nutriScore;
         this.ingr = ingr;
@@ -173,8 +173,8 @@ public class Produit {
         this.pack = pack;
     }
     
-    public void setPics(List<String> pics){
-        this.pics = pics;
+    public void setPic (String pic){
+        this.picture = pic;
     }
     
     public void setSign(List<String> sign){
@@ -204,13 +204,6 @@ public class Produit {
     public void setTabNut(List<List<String>> tab){
         this.tabNut = tab;
     }
-    /**
-     * Add a picture of the product
-     * @param url the url of the product image
-     */
-    public void pushPics(String url){
-        this.pics.add(url);
-    }
         
     /**
      * Add a sign to the product
@@ -238,7 +231,7 @@ public class Produit {
         jsonObject.put ("price" ,this.price);
         jsonObject.put ("pricePerKg",this.pricePerKg);
         jsonObject.put ("pack" ,this.pack);
-        jsonObject.put ("pics" ,this.pics);
+        jsonObject.put ("pics" ,this.picture);
         jsonObject.put ("sign" ,this.sign);
         jsonObject.put ("nutScore" ,this.nutriScore);
         jsonObject.put ("ingr" ,this.ingr);
