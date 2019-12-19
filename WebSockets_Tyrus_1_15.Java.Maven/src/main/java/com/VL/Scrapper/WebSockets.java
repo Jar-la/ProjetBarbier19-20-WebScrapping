@@ -83,13 +83,7 @@ public class WebSockets {
                 produits.add(patate);    
                 */
                 /* Fin test */
-                
-                //Trasfert la list de produit dans une liste d'objets JSON
-                List <JSONObject> jsonProduits = new ArrayList<>();
-                produits.forEach((prod) -> {jsonProduits.add(prod.toJson());});
-                
-                JSONArray jProduits = new JSONArray(jsonProduits);  
-                System.out.println("JSONArray.toString" + jProduits.toString());
+               
                 
                 try{
                     session.getBasicRemote().sendText(scrap.Search(query, qty).toString());

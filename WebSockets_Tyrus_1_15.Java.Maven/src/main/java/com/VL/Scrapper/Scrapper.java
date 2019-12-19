@@ -79,16 +79,19 @@ public class Scrapper {
             
             
             //prod.setIngr(details.get(3).asText());
-            //String splitArray_ingr[] = details.get(3).asText().split("[.]");
-           // System.out.println(splitArray_ingr[0]);
-            
+            if(details.size()>=3)
+            {
+                String splitArray_ingr[] = details.get(3).asText().replace("Que contient le produit ?","").replaceFirst("\r\n+", "").split("[.]");
+                prod.setIngr(splitArray_ingr[0]);
+            }else{
+                prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
+            }
             
             String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
             prod.setPack(splitArray[0]);
             prod.setPricePerKg(splitArray[2]);
             
             HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
-            //System.out.println(picture.asText());
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
             
             jsonProduits.add(prod.toJson());
