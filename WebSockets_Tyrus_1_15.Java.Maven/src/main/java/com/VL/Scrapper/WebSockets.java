@@ -19,7 +19,7 @@ public class WebSockets {
      * Danger : il faut que le constructeur de 'My_ServerEndpoint' soit bien
      * accessible par le serveur WebSockets. Ne pas oublier 'static'!
      */
-    @javax.websocket.server.ServerEndpoint(value = "/WebSockets_illustration")
+    @javax.websocket.server.ServerEndpoint(value = "/WebSockets")
     public static class My_ServerEndpoint {
         
         Scrapper scrap = null;
@@ -117,7 +117,7 @@ public class WebSockets {
         java.util.Map<String, Object> user_properties = new java.util.HashMap();
         user_properties.put("Author", "Lafon_Vanootegem");
 
-        org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 1963, "/FranckBarbier", user_properties /* or 'null' */, My_ServerEndpoint.class);
+        org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 1963, "/LafonVanootegem", user_properties /* or 'null' */, My_ServerEndpoint.class);
         try {
             server.start();
             // The Web page is launched from Java:
