@@ -1,10 +1,9 @@
 "use strict";
 
-var nbArticlesAffiche = 0;
 window.onload = () => {
   // Tested with Tyrus 1.15 WebSockets Java library
   let service = new WebSocket(
-    "ws://localhost:1963/FranckBarbier/WebSockets_illustration"
+    "ws://localhost:1963/LafonVanootegem/WebSockets"
   );
   service.onmessage = event => {
     //console.log("Message from Java: " + event.data);
@@ -98,7 +97,6 @@ window.onload = () => {
       i -= -1;
     }
     document.getElementById("AppContainer").innerHTML = htlmArticles;
-    nbArticlesAffiche = --i;
 
     for (let j = i; j >= 0; j--) {
       document.getElementById(j).addEventListener("click", etendre);
@@ -109,7 +107,6 @@ window.onload = () => {
 
   //Change la façons d'afficher l'article cliqué en changeant sa classe
   function etendre() {
-    //console.log(`h${this.id}`);
     this.classList.remove("articleContainerRetracted");
     this.classList.add("articleContainerExtended");
     document.getElementById(`h${this.id}`).classList.remove("hidden");
@@ -134,17 +131,20 @@ window.onload = () => {
     outputArticles.innerHTML = this.value;
   };
 
-  // Gestion de la recherche
+  // Gestion de la recherche-----------------------------------------------------------------------
   let buttonR = document.getElementById("buttonR");
-
+  let oldRequest = "";
   buttonR.onclick = function request() {
     let quantity = sliderArticles.value;
     let search = document.getElementById("s").value;
     // On enleve tous ce qui n'est pas un chiffre ou une lettre
     let searchReg = search.replace(/[^a-z0-9]/gi, "");
-    // Envoie la saisie de l'utilisateur fitré et la quantité
-    let data = service.send(
-      JSON.stringify({ Request: `${searchReg}`, Quantity: `${quantity}` })
-    );
+    // Envoie la saisie de l'utilisateur fitré et la quantité si non chaine vide et recherche différente
+    if (searchReg != "" && searchReg != oldRequest) {
+      //oldRequest = searchReg;
+      let data = service.send(
+        JSON.stringify({ Request: `${searchReg}`, Quantity: `${quantity}` })
+      );
+    }
   };
 };
