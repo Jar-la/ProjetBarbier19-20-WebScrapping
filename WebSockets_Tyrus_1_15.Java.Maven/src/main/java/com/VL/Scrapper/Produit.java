@@ -20,6 +20,12 @@ public class Produit {
      */
     private String name;
     
+    /** 
+     * The brand of the product.
+     */
+    private String brand;
+    
+    
     /**
      * The description of the product.
      */
@@ -28,7 +34,7 @@ public class Produit {
     /**
      * The price of the product.
      */
-    private Double  price;
+    private String  price;
     
     /**
      *  The price per Kg of the product.
@@ -87,6 +93,7 @@ public class Produit {
     
     Produit(){
         name = null;
+        brand = null;
         desc = null;
         price = null;
         pricePerKg =null;
@@ -105,6 +112,7 @@ public class Produit {
     /**
      * Constructor with all parameters of a Product
      * @param name          // Name
+     * @param brand         // Brand
      * @param desc          // Description
      * @param price         // Price
      * @param pricePerKg    // Price per Kg
@@ -118,10 +126,11 @@ public class Produit {
      * @param pres          // List of all preservatives
      * @param tabNut        // Table of nutritional values
      */
-    Produit(String name, String desc, Double price, Double pricePerKg,  String pack, List<String> pics, 
+    Produit(String name, String brand, String desc, String price, Double pricePerKg,  String pack, List<String> pics, 
             List<String> sign, String nutriScore, String ingr, String aller, 
             String addit, String pres, List<List<String>> tabNut){
         this.name = name;
+        this.brand = brand;
         this.desc = desc;
         this.price = price;
         this.pricePerKg = pricePerKg;
@@ -144,11 +153,15 @@ public class Produit {
         this.name = name;
     }
     
+    public void setBrand(String brand){
+        this.brand = brand;
+    }
+    
     public void setDesc(String desc){
         this.desc = desc;
     }
     
-    public void setPrice(Double price){
+    public void setPrice(String price){
         this.price = price;
     }
 
@@ -220,6 +233,7 @@ public class Produit {
         
         
         jsonObject.put ("name" ,this.name);
+        jsonObject.put ("brand" ,this.brand);
         jsonObject.put ("desc" ,this.desc);
         jsonObject.put ("price" ,this.price);
         jsonObject.put ("pricePerKg",this.pricePerKg);

@@ -14,7 +14,10 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSection;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -27,7 +30,7 @@ public class Scrapper {
     HtmlForm form = null;
     HtmlTextInput textField = null;
     
-    Scrapper(){
+    Scrapper() throws IOException{
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setRedirectEnabled(true);
@@ -37,26 +40,48 @@ public class Scrapper {
         textField = form.getInputByName("query");
     }
     
-    void Search(String query) throws IOException{
+    JSONArray Search(String query, int qty) throws IOException{
+        HtmlPage page2 = null;
         page = (HtmlPage)client.getPage(baseUrl);
         form = (HtmlForm) page.getElementById("search");
-        textField = form.getInputByName("query");                
+        textField = form.getInputByName("query");              
         textField.type(query);
         final HtmlButton button;
         button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
         page = button.click();
-        List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
-        System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
-        List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
-        System.out.println(marque.get(0).asText());
-        List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
-        System.out.println(prix.get(0).asText());
+              
+        List<HtmlAnchor> lienArticle;
+        lienArticle = page.getByXPath("//a[@class='img POP_open']");
         
-        HtmlAnchor lienArticle;
-        HtmlPage page2;
-        lienArticle = page.getFirstByXPath("//a[@class='img POP_open']");
-        page2 = lienArticle.click();
-        HtmlElement aupif = page2.getFirstByXPath("//div[@class='cnt-info']");
-        System.out.println(aupif.asText().replace("Le produit","").replaceAll("[\r\n]+", " "));
+        List <JSONObject> jsonProduits = new ArrayList<>();
+        
+        for(int i = 0; i <= qty; i++)
+        {
+            Produit prod = new Produit();
+          
+            List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
+            // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
+            prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
+
+            List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
+            // System.out.println(marque.get(0).asText());
+            prod.setBrand(marque.get(i).asText());
+
+            List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
+            // System.out.println(prix.get(0).asText());
+            prod.setPrice(prix.get(i).asText());
+            
+            
+            page2 = lienArticle.get(i).click();
+            HtmlElement desc = page2.getFirstByXPath("//div[@class='cnt-info']");
+            prod.setDesc(desc.asText().replace("Le produit","").replaceFirst("\r\n+", ""));
+            
+            jsonProduits.add(prod.toJson());
+        }
+        
+        JSONArray jProduits = new JSONArray(jsonProduits);  
+        System.out.println("JSONArray.toString" + jProduits.toString());
+        
+        return(jProduits);
     }
 }
