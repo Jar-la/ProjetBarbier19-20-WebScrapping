@@ -39,6 +39,12 @@ window.onload = () => {
       if (article.pics != null) {
         image = `<img class="imageArticle" src="${article.pics}"  />`;
       }
+      // Balise pour la marque de l'article
+      let marque = ``;
+      if (article.brand != null) {
+        marque = `<div class= "marqueArticle" > Marque:${article.brand} </div>`;
+      }
+
       // Balise pour le nom de l'article
       let nom = ``;
       if (article.name != null) {
@@ -117,6 +123,7 @@ window.onload = () => {
           <div class="articleContainerRetracted" id="${i}" >
             <div class="alwaysVisible">
               ${image}
+              ${marque}
               ${nom}
               ${prix}
               ${cond}

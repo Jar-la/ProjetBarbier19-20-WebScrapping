@@ -74,12 +74,12 @@ public class Scrapper {
 
             // System.out.println(prix.get(0).asText());
             prod.setPrice(prix.get(i).asText());
-            
+
             page2 = lienArticle.get(i).click();
             List<HtmlElement> details = page2.getByXPath("//div[@class='cnt-info']");
             prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r\n+", ""));
-            
-            
+
+
             //prod.setIngr(details.get(3).asText());
             if(details.size()>=2)
             {
@@ -98,7 +98,6 @@ public class Scrapper {
                 if(!isIngr){
                     prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
                 }
-                
             }else{
                 prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
             }

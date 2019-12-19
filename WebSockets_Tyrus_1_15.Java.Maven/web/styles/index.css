@@ -161,6 +161,11 @@
   width: 320px;
   grid-column: 1/6;
 }
+
+.marqueArticle {
+  grid-column: 1/5;
+}
+
 .nomArticle {
   grid-column: 1/5;
 }
