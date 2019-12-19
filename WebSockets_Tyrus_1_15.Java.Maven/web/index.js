@@ -196,20 +196,18 @@ window.onload = () => {
   buttonR.onclick = function request() {
     let quantity = sliderArticles.value;
     let search = document.getElementById("s").value;
+
     // On enleve tous ce qui n'est pas un chiffre ou une lettre
-    let searchReg = search.replace(/[^a-z0-9 ]/gi, "");
-    // Envoie la saisie de l'utilisateur fitré et la quantité si non chaine vide et recherche différente
-    if (searchReg != "" && searchReg != oldRequest) {
-      //oldRequest = searchReg;
     let searchReg = search.replace(/[^a-z0-9\s]/gi, "");
+
     // Envoie la saisie de l'utilisateur fitré et la quantité si la chaine est non vide et
     // si la recherche ou la quantité à changée
     if (searchReg != "" && (searchReg != oldRequest || quantity != oldQuantity)) {
       oldRequest = searchReg;
       oldQuantity = quantity;
       let data = service.send(
-        JSON.stringify({ Request: `${searchReg}`, Quantity: `${quantity}` })
-      );
+      JSON.stringify({ Request: `${searchReg}`, Quantity: `${quantity}` }));
     }
   };
 };
+
