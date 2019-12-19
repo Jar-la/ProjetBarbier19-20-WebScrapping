@@ -44,7 +44,7 @@ public class Scrapper {
         HtmlPage page2 = null;
         page = (HtmlPage)client.getPage(baseUrl);
         form = (HtmlForm) page.getElementById("search");
-        textField = form.getInputByName("query");              
+        textField = form.getInputByName("query");
         textField.type(query);
         final HtmlButton button;
         button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
@@ -59,7 +59,6 @@ public class Scrapper {
         List<HtmlElement> marque = page.getByXPath("//strong[@class='color6 ']");
         List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
         List<HtmlElement> prixKiloMasse = page.getByXPath("//span[@class='info']");
-        List<HtmlElement> image = page.getByXPath("//img[@itemprop='image']");
         
         for(int i = 0; i < qty; i++)
         {
@@ -67,7 +66,7 @@ public class Scrapper {
           
             // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
             prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
-            
+
             // System.out.println(marque.get(0).asText());
             prod.setBrand(marque.get(i).asText());
 
@@ -75,16 +74,24 @@ public class Scrapper {
             prod.setPrice(prix.get(i).asText());
             
             page2 = lienArticle.get(i).click();
-            HtmlElement desc = page2.getFirstByXPath("//div[@class='cnt-info']");
-            prod.setDesc(desc.asText().replace("Le produit","").replaceFirst("\r\n+", ""));
+            List<HtmlElement> details = page2.getByXPath("//div[@class='cnt-info']");
+            prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r\n+", ""));
+            
+            
+            
+            //prod.setIngr(details.get(3).asText());
+            //String splitArray_ingr[] = details.get(3).asText().split("[.]");
+           // System.out.println(splitArray_ingr[0]);
+            
             
             String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
             prod.setPack(splitArray[0]);
             prod.setPricePerKg(splitArray[2]);
-            prod.setPic("https:" + image.get(i).getAttributeNode("src").getNodeValue());
+            
+            HtmlElement picture = page2.getFirstByXPath("//img");
+            prod.setPic("https:" + picture.getAttributeNode("src").getNodeValue());
             
             jsonProduits.add(prod.toJson());
-
         }
         
         JSONArray jProduits = new JSONArray(jsonProduits);  
