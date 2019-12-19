@@ -2,7 +2,6 @@ package com.VL.Scrapper;
 
 //https://tyrus-project.github.io/documentation/1.12/user-guide.html#getting-started
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.websocket.DeploymentException;
@@ -12,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.*;
 import java.io.IOException;
 
 public class WebSockets {
@@ -28,7 +23,6 @@ public class WebSockets {
     public static class My_ServerEndpoint {
         
         Scrapper scrap = null;
-        
         
         @javax.websocket.OnClose
         public void onClose(javax.websocket.Session session, javax.websocket.CloseReason close_reason) {
@@ -56,12 +50,12 @@ public class WebSockets {
                 String query = jMessage.getString("Request");
                 int qty = jMessage.getInt("Quantity");
                 
-                scrap.Search(query);
-                
+                                
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
                 
                 /*  TEST AJOUT PRODUIT  */
+                
                 List<String> images = new ArrayList<>();
                 images.add("https://smedia.productpage.io/product/picture/exportable/197dff15-bca7-44d1-bd04-db6960d04591/512x512.jpg");
                 images.add("https://smedia.productpage.io/product/picture/exportable/38a7b1fd-1da6-4dc7-bf97-704961c74d28/512x512.jpg");
@@ -80,10 +74,10 @@ public class WebSockets {
                 List<List<String>> tabNutri = new ArrayList<>();
                 tabNutri.add(colone1);
                 tabNutri.add(colone2);
-                Produit patate = new Produit("Captain Morgan Original Spiced Gold",  "Des saveurs de vanille et de caramel délicieusement épicé qui puisent leurs orgines\n" +
+                Produit patate = new Produit("Captain Morgan Original Spiced Gold", "Captain Morgan",  "Des saveurs de vanille et de caramel délicieusement épicé qui puisent leurs orgines\n" +
 "          dansles recettes élaborées au 17ème siècle par les pirates et corsaires, qui avaient pour habitude de macérer\n" +
 "          les épices dans leur rhum pour en développer les arômes. Un vieillissement en fût de chêne lui donne ensuite\n" +
-"          sa robe dorée et développe ses arômes inimitables",  15.90, 22.71,"70cL", images,signaletique,"https://smedia.productpage.io/api/1/referential/nutriscore/nutriScore_A.png",
+"          sa robe dorée et développe ses arômes inimitables",  "15.90", 22.71,"70cL", images,signaletique,"https://smedia.productpage.io/api/1/referential/nutriscore/nutriScore_A.png",
                                 "De l'amour et des calins", "pollens", "E3000, T69", "Garder au frais", tabNutri);
                 produits.add(patate);
                 produits.add(patate);              
@@ -97,7 +91,7 @@ public class WebSockets {
                 System.out.println("JSONArray.toString" + jProduits.toString());
                 
                 try{
-                    session.getBasicRemote().sendText(jProduits.toString());
+                    session.getBasicRemote().sendText(scrap.Search(query, qty).toString());
                 } catch (IOException ex) {
                     Logger.getLogger(WebSockets.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -111,7 +105,6 @@ public class WebSockets {
             //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
                 scrap = new Scrapper();
-                
             }
             catch(FailingHttpStatusCodeException | IOException e){
             

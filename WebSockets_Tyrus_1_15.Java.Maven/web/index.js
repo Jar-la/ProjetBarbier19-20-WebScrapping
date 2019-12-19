@@ -63,11 +63,9 @@ window.onload = () => {
                   .join("\n                ")}
               </div>
               <div class= "nomArticle" > Nom:${article.name} </div>
-              <div class= "prixArticle" > Prix:${article.price.toFixed(2)}€ </div>
+              <div class= "prixArticle" > Prix:${article.price} </div>
               <div class= "condArticles" > Quantité:${article.pack} </div>
-              <div class= "prixKgArticle" > Prix/kg:${article.pricePerKg.toFixed(
-                2
-              )}€ </div>
+              <div class= "prixKgArticle" > Prix/kg:${article.pricePerKg} </div>
               <div class= "descArticle" > Description: <br/>${article.desc} </div>
               <div class="signsArticles">
                 ${article.sign
@@ -83,7 +81,7 @@ window.onload = () => {
                 }" alt="nutriScore">
               </div>
             </div>
-            
+
             <div class= "hidden" id="h${i}">
               <div class= "ingreArticles" >Ingredients: <br/> ${article.ingr} </div>
               <div class= "allergenesArticles" >Allergènes: <br/> ${article.allerg} </div>
@@ -94,7 +92,7 @@ window.onload = () => {
               </div>
             </div>
           </div>
-                        
+
       `;
       i -= -1;
     }
