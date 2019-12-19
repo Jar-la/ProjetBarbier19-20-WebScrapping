@@ -87,7 +87,8 @@ public class Scrapper {
             prod.setPack(splitArray[0]);
             prod.setPricePerKg(splitArray[2]);
             
-            HtmlElement picture = page2.getFirstByXPath("//a[@class'zoom-img1']");
+            HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
+            //System.out.println(picture.asText());
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
             
             jsonProduits.add(prod.toJson());
