@@ -77,7 +77,7 @@ public class Scrapper {
 
             page2 = lienArticle.get(i).click();
             List<HtmlElement> details = page2.getByXPath("//div[@class='cnt-info']");
-            prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r\n+", ""));
+            prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r","").replace("\r", "<br>"));
 
 
             //prod.setIngr(details.get(3).asText());
