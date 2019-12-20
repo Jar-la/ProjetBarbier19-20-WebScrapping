@@ -13,16 +13,16 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import java.io.IOException;
 
 public class WebSockets {
-    
+
     /**
      * Danger : il faut que le constructeur de 'My_ServerEndpoint' soit bien
      * accessible par le serveur WebSockets. Ne pas oublier 'static'!
      */
     @javax.websocket.server.ServerEndpoint(value = "/WebSockets")
     public static class My_ServerEndpoint {
-        
+
         Scrapper scrap = null;
-        
+
         @javax.websocket.OnClose
         public void onClose(javax.websocket.Session session, javax.websocket.CloseReason close_reason) {
             System.out.println("onClose: " + close_reason.getReasonPhrase());
@@ -42,13 +42,13 @@ public class WebSockets {
             //System.out.println("jMessage.has(\"Request\")= " + jMessage.has("Request"));
 
             if ( jMessage.has("Response") ){
-                
+
                 System.out.println("Message de JavaScript :" + jMessage.get("Response"));
 
             }else if (jMessage.has("Request")){
                 String query = jMessage.getString("Request");
                 int qty = jMessage.getInt("Quantity");
-                
+
 
                 //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
@@ -70,7 +70,7 @@ public class WebSockets {
                 scrap = new Scrapper();
             }
             catch(FailingHttpStatusCodeException | IOException e){
-            
+
             }
         }
     }
@@ -95,5 +95,3 @@ public class WebSockets {
         }
     }
 }
-
-

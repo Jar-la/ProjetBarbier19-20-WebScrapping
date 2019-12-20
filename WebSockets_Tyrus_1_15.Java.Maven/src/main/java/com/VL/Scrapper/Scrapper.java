@@ -29,7 +29,7 @@ public class Scrapper {
     HtmlPage page = null;
     HtmlForm form = null;
     HtmlTextInput textField = null;
-    
+
     Scrapper() throws IOException{
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
@@ -39,7 +39,7 @@ public class Scrapper {
         form = (HtmlForm) page.getElementById("search");
         textField = form.getInputByName("query");
     }
-    
+
     JSONArray Search(String query, int qty) throws IOException{
         HtmlPage page2 = null;
         page = (HtmlPage)client.getPage(baseUrl);
@@ -49,23 +49,23 @@ public class Scrapper {
         final HtmlButton button;
         button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
         page = button.click();
-        
+
         List<HtmlAnchor> lienArticle;
         lienArticle = page.getByXPath("//a[@class='img POP_open']");
-        
+
         List <JSONObject> jsonProduits = new ArrayList<>();
-        
+
         List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
         List<HtmlElement> marque = page.getByXPath("//a[@class='POP_open']/strong");
         List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
         List<HtmlElement> prixKiloMasse = page.getByXPath("//span[@class='info']");
-        
+
         int i = 0;
         while(i < qty && nodes.size()>i)
         {
-            
+
             Produit prod = new Produit();
-          
+
             // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
             prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
 
@@ -101,7 +101,7 @@ public class Scrapper {
             }else{
                 prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
             }
-            
+
             if(prixKiloMasse.get(i).asText().contains(" | "))
             {
                 String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
@@ -110,17 +110,17 @@ public class Scrapper {
             }else{
                 prod.setPack(prixKiloMasse.get(i).asText());
             }
-            
-            
+
+
             HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
-            
+
             jsonProduits.add(prod.toJson());
             i++;
         }
-        
+
         JSONArray jProduits = new JSONArray(jsonProduits);
-        
+
         return(jProduits);
     }
 }
