@@ -24,13 +24,15 @@ import org.json.JSONObject;
  * @author edwin
  */
 public class Scrapper {
-    String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
-    private WebClient client = new WebClient();
+    String baseUrl ;
+    private final WebClient client;
     HtmlPage page = null;
     HtmlForm form = null;
     HtmlTextInput textField = null;
-    
+
     Scrapper() throws IOException{
+        this.client = new WebClient();
+        this.baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2";
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setRedirectEnabled(true);
@@ -39,9 +41,9 @@ public class Scrapper {
         form = (HtmlForm) page.getElementById("search");
         textField = form.getInputByName("query");
     }
-    
+
     JSONArray Search(String query, int qty) throws IOException{
-        HtmlPage page2 = null;
+        HtmlPage page2;
         page = (HtmlPage)client.getPage(baseUrl);
         form = (HtmlForm) page.getElementById("search");
         textField = form.getInputByName("query");
@@ -49,38 +51,30 @@ public class Scrapper {
         final HtmlButton button;
         button = (HtmlButton) page.getByXPath("//button[@title='OK']").get(0);
         page = button.click();
-        
+
         List<HtmlAnchor> lienArticle;
         lienArticle = page.getByXPath("//a[@class='img POP_open']");
-        
+
         List <JSONObject> jsonProduits = new ArrayList<>();
-        
+
         List<HtmlSection> nodes = page.getByXPath("//section[@class=' tagClick']");
         List<HtmlElement> marque = page.getByXPath("//a[@class='POP_open']/strong");
         List<HtmlElement> prix = page.getByXPath("//div[@itemprop='price']");
         List<HtmlElement> prixKiloMasse = page.getByXPath("//span[@class='info']");
-        
+
         int i = 0;
         while(i < qty && nodes.size()>i)
         {
-            
             Produit prod = new Produit();
-          
-            // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
-            prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
-
-            // System.out.println(marque.get(0).asText());
-            prod.setBrand(marque.get(i).asText());
-
-            // System.out.println(prix.get(0).asText());
-            prod.setPrice(prix.get(i).asText());
             
+            prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
+            prod.setBrand(marque.get(i).asText());
+            prod.setPrice(prix.get(i).asText());
+
             page2 = lienArticle.get(i).click();
             List<HtmlElement> details = page2.getByXPath("//div[@class='cnt-info']");
-            prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r\n+", ""));
-            
-            
-            //prod.setIngr(details.get(3).asText());
+            prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r","").replace("\r", "<br>"));
+
             if(details.size()>=2)
             {
                 boolean isIngr = false;
@@ -98,11 +92,10 @@ public class Scrapper {
                 if(!isIngr){
                     prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
                 }
-                
             }else{
                 prod.setIngr("Casino ne fourni pas d'informations à ce sujet.");
             }
-            
+
             if(prixKiloMasse.get(i).asText().contains(" | "))
             {
                 String splitArray[] = prixKiloMasse.get(i).asText().split(" | ");
@@ -112,16 +105,13 @@ public class Scrapper {
                 prod.setPack(prixKiloMasse.get(i).asText());
             }
             
-            
             HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
-            
+
             jsonProduits.add(prod.toJson());
             i++;
         }
-        
         JSONArray jProduits = new JSONArray(jsonProduits);
-        
         return(jProduits);
     }
 }

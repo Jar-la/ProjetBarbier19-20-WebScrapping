@@ -19,6 +19,7 @@ window.onload = () => {
   service.onclose = (event /*:CloseEvent*/) => {
     console.log("service.onclose... " + event.code);
     window.alert("Bye! See you later...");
+    window.close()
     // '1011': the server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.
   };
   service.onerror = () => {
@@ -39,30 +40,36 @@ window.onload = () => {
       if (article.pics != null) {
         image = `<img class="imageArticle" src="${article.pics}"  />`;
       }
+      // Balise pour la marque de l'article
+      let marque = ``;
+      if (article.brand != null) {
+        marque = `<div class= "marqueArticle" > <span>Marque</span> : ${article.brand} </div>`;
+      }
+
       // Balise pour le nom de l'article
       let nom = ``;
       if (article.name != null) {
-        nom = `<div class= "nomArticle" > Nom:${article.name} </div>`;
+        nom = `<div class= "nomArticle" > <span>Nom</span> : ${article.name} </div>`;
       }
       // Balise pour le prix
       let prix = ``;
       if (article.price != null) {
-        prix = `<div class= "prixArticle" > Prix:${article.price} </div>`;
+        prix = `<div class= "prixArticle" > <span>Prix</span> : ${article.price} </div>`;
       }
       // Balise pour le conditionement
       let cond = ``;
       if (article.pack != null) {
-        cond = `<div class= "condArticles" > Quantité:${article.pack} </div>`;
+        cond = `<div class= "condArticles" ><span>Quantité</span>:<br>${article.pack} </div>`;
       }
       // Balise pour le prix au Kg ou L
       let prixKg = ``;
       if (article.pricePerKg != null) {
-        prixKg = `<div class= "prixKgArticle" > Prix/kg:${article.pricePerKg} </div>`;
+        prixKg = `<div class= "prixKgArticle" > <span>Prix/kg</span> : <br>${article.pricePerKg} </div>`;
       }
       // Balsie de la description du produit
       let desc = ``;
       if (article.desc != null) {
-        desc = `<div class= "descArticle" > Description: <br/>${article.desc} </div>`;
+        desc = `<div class= "descArticle" > <span>Description</span> : ${article.desc} </div>`;
       }
       // Balise pour les images de signaletique
       let sign = ``;
@@ -86,7 +93,7 @@ window.onload = () => {
       //  Balise pour les ingredients
       let ingr = ``;
       if (article.ingr != null) {
-        ingr = `<div class= "ingreArticles" >Ingredients: <br/> ${article.ingr} </div>`;
+        ingr = `<div class= "ingreArticles" ><span>Ingredients</span> : <br/> ${article.ingr} </div>`;
       }
       // Balise pour les allergenes
       let allg = ``;
@@ -117,6 +124,7 @@ window.onload = () => {
           <div class="articleContainerRetracted" id="${i}" >
             <div class="alwaysVisible">
               ${image}
+              ${marque}
               ${nom}
               ${prix}
               ${cond}
@@ -171,6 +179,7 @@ window.onload = () => {
     this.removeEventListener("click", etendre);
     this.addEventListener("click", retracter);
   }
+
   function retracter() {
     this.classList.remove("articleContainerExtended");
     this.classList.add("articleContainerRetracted");

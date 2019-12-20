@@ -15,27 +15,27 @@ import org.json.JSONObject;
  */
 
 public class Produit {
-    /** 
+    /**
      * The name of the product.
      */
     private String name;
-    
-    /** 
+
+    /**
      * The brand of the product.
      */
     private String brand;
-    
-    
+
+
     /**
      * The description of the product.
      */
     private String desc;
-    
+
     /**
      * The price of the product.
      */
     private String  price;
-    
+
     /**
      *  The price per Kg of the product.
      */
@@ -45,52 +45,52 @@ public class Produit {
      * The packaging of the product.
      */
     private String pack;
-    
+
     /**
      * Url to Picture of the product.
      */
     private String picture;
-    
+
     /**
      * Urls to Signs images of the product.
      */
     private List<String> sign;
-    
+
     /**
      * Url to the nutriscore image the product.
      */
     private String nutriScore;
-    
+
     /**
      * Ingredients of the product.
      */
     private String ingr;
-    
+
     /**
      * Allergens in the product.
      */
     private String aller;
-    
+
     /**
      * Additive in the product.
      */
     private String addit;
-    
+
     /**
      * Preservatives int the product.
      */
     private String pres;
-    
+
     /**
      * Table of nutritional values.
      */
     private List<List<String>> tabNut;
-    
+
     /**
      * The product under it's JSON form.
      */
     private JSONObject jsonObject;
-    
+
     Produit(){
         name = null;
         brand = null;
@@ -108,7 +108,7 @@ public class Produit {
         tabNut = null;
         jsonObject = null;
     }
-    
+
     /**
      * Constructor with all parameters of a Product
      * @param name          // Name
@@ -117,7 +117,7 @@ public class Produit {
      * @param price         // Price
      * @param pricePerKg    // Price per Kg
      * @param pack          // Packaging
-     * @param picture       // Url of picture 
+     * @param picture       // Url of picture
      * @param sign          // Urls of signaltic pictures
      * @param nutriScore    // Url of the nutri score image
      * @param ingr          // List of all ingredient
@@ -126,8 +126,8 @@ public class Produit {
      * @param pres          // List of all preservatives
      * @param tabNut        // Table of nutritional values
      */
-    Produit(String name, String brand, String desc, String price, String pricePerKg,  String pack, String pic, 
-            List<String> sign, String nutriScore, String ingr, String aller, 
+    Produit(String name, String brand, String desc, String price, String pricePerKg,  String pack, String pic,
+            List<String> sign, String nutriScore, String ingr, String aller,
             String addit, String pres, List<List<String>> tabNut){
         this.name = name;
         this.brand = brand;
@@ -144,23 +144,23 @@ public class Produit {
         this.pres = pres;
         this.tabNut = tabNut;
     }
-    
+
     Produit(JSONObject jsonObject){
         this.jsonObject = jsonObject;
     }
-    
+
     public void setName(String name){
         this.name = name;
     }
-    
+
     public void setBrand(String brand){
         this.brand = brand;
     }
-    
+
     public void setDesc(String desc){
         this.desc = desc;
     }
-    
+
     public void setPrice(String price){
         this.price = price;
     }
@@ -168,15 +168,15 @@ public class Produit {
     public void setPricePerKg(String pricePerKg){
         this.pricePerKg = pricePerKg;
     }
-    
+
     public void setPack(String pack){
         this.pack = pack;
     }
-    
+
     public void setPic (String pic){
         this.picture = pic;
     }
-    
+
     public void setSign(List<String> sign){
         this.sign = sign;
     }
@@ -184,11 +184,11 @@ public class Produit {
     public void setNutriScore (String score){
         this.nutriScore = score;
     }
-    
+
     public void setIngr(String ingr){
         this.ingr = ingr;
     }
-    
+
     public void setAller(String aller){
         this.aller = aller;
     }
@@ -196,15 +196,15 @@ public class Produit {
     public void setAddit(String addit){
         this.addit = addit;
     }
-    
+
     public void setPres(String pres){
         this.pres = pres;
     }
-    
+
     public void setTabNut(List<List<String>> tab){
         this.tabNut = tab;
     }
-        
+
     /**
      * Add a sign to the product
      * @param url the url of the sign image
@@ -212,19 +212,19 @@ public class Produit {
     public void pushSign(String url){
         this.sign.add(url);
     }
-    
+
     public Produit toProduct(JSONObject jProduit){
-        
-       return this; 
+
+       return this;
     }
-    
+
     public JSONObject toJson(){
-      
+
         if(this.jsonObject == null){
             jsonObject = new JSONObject();
         }
-        
-        
+
+
         jsonObject.put ("name" ,this.name);
         jsonObject.put ("brand" ,this.brand);
         jsonObject.put ("desc" ,this.desc);
@@ -239,13 +239,13 @@ public class Produit {
         jsonObject.put ("addit" ,this.addit);
         jsonObject.put ("pres" ,this.pres);
         jsonObject.put ("tabNut" ,this.tabNut);
-        
+
         return jsonObject;
     }
-    
-    public String toJsonString(){     
+
+    public String toJsonString(){
         this.toJson();
         return jsonObject.toString();
     }
-    
+
 }
