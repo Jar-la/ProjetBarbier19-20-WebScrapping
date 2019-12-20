@@ -41,7 +41,7 @@ public class Scrapper {
     }
 
     JSONArray Search(String query, int qty) throws IOException{
-        HtmlPage page2 = null;
+        HtmlPage page2;
         page = (HtmlPage)client.getPage(baseUrl);
         form = (HtmlForm) page.getElementById("search");
         textField = form.getInputByName("query");

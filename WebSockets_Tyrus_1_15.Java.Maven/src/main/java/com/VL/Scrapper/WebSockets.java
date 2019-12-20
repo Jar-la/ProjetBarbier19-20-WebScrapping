@@ -38,8 +38,6 @@ public class WebSockets {
         @javax.websocket.OnMessage
         public void onMessage(javax.websocket.Session session, String message) throws IOException {
             JSONObject jMessage= new JSONObject(message);       //convertir le message en object JSON
-            //System.out.println("jMessage.has(\"Response\")= " + jMessage.has("Response"));
-            //System.out.println("jMessage.has(\"Request\")= " + jMessage.has("Request"));
 
             if ( jMessage.has("Response") ){
 
