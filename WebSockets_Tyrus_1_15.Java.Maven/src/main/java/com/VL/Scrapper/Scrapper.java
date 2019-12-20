@@ -24,13 +24,15 @@ import org.json.JSONObject;
  * @author edwin
  */
 public class Scrapper {
-    String baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2" ;
-    private WebClient client = new WebClient();
+    String baseUrl ;
+    private final WebClient client;
     HtmlPage page = null;
     HtmlForm form = null;
     HtmlTextInput textField = null;
 
     Scrapper() throws IOException{
+        this.client = new WebClient();
+        this.baseUrl = "https://www.mescoursescasino.fr/ecommerce/GC-catalog/fr/WE64904/?moderetrait=Z2";
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
         client.getOptions().setRedirectEnabled(true);
