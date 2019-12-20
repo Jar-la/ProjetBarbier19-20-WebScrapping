@@ -65,24 +65,16 @@ public class Scrapper {
         int i = 0;
         while(i < qty && nodes.size()>i)
         {
-
             Produit prod = new Produit();
-
-            // System.out.println(nodes.get(0).getAttributeNode("data-product-name").getNodeValue());
+            
             prod.setName(nodes.get(i).getAttributeNode("data-product-name").getNodeValue());
-
-            // System.out.println(marque.get(0).asText());
             prod.setBrand(marque.get(i).asText());
-
-            // System.out.println(prix.get(0).asText());
             prod.setPrice(prix.get(i).asText());
 
             page2 = lienArticle.get(i).click();
             List<HtmlElement> details = page2.getByXPath("//div[@class='cnt-info']");
             prod.setDesc(details.get(0).asText().replace("Le produit","").replaceFirst("\r","").replace("\r", "<br>"));
 
-
-            //prod.setIngr(details.get(3).asText());
             if(details.size()>=2)
             {
                 boolean isIngr = false;
@@ -112,17 +104,14 @@ public class Scrapper {
             }else{
                 prod.setPack(prixKiloMasse.get(i).asText());
             }
-
-
+            
             HtmlElement picture = page2.getFirstByXPath("//a[@class='zoom-img1']");
             prod.setPic("https:" + picture.getAttributeNode("href").getNodeValue());
 
             jsonProduits.add(prod.toJson());
             i++;
         }
-
         JSONArray jProduits = new JSONArray(jsonProduits);
-
         return(jProduits);
     }
 }

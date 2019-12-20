@@ -48,27 +48,24 @@ public class WebSockets {
                 int qty = jMessage.getInt("Quantity");
 
 
-                //TODO : Remplir la liste produits avec qty produit de la recherche de query
                 List<Produit> produits = new ArrayList<>();
 
                 try{
                     session.getBasicRemote().sendText(scrap.Search(query, qty).toString());
-                } catch (IOException ex) {
+                } catch (IOException ex){
                     Logger.getLogger(WebSockets.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
 
         @javax.websocket.OnOpen
-        public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException {
+        public void onOpen(javax.websocket.Session session, javax.websocket.EndpointConfig ec) throws java.io.IOException{
             System.out.println("OnOpen... " + ec.getUserProperties().get("Author"));
             System.out.println("OnOpen string = " + ec.toString());
-            //session.getBasicRemote().sendText("{Handshaking: \"Yes\"}");
             try{
                 scrap = new Scrapper();
             }
             catch(FailingHttpStatusCodeException | IOException e){
-
             }
         }
     }
