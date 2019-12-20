@@ -207,7 +207,7 @@ window.onload = () => {
     let search = document.getElementById("s").value;
 
     // On enleve tous ce qui n'est pas un chiffre ou une lettre
-    let searchReg = search.replace(/[^a-z0-9éèàêù\s]/gi, "");
+    let searchReg = search.replace(/[^a-z0-9éèàêùç\s]/gi, "");
 
     // Envoie la saisie de l'utilisateur fitré et la quantité si la chaine est non vide et
     // si la recherche ou la quantité à changée
