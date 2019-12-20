@@ -19,6 +19,7 @@ window.onload = () => {
   service.onclose = (event /*:CloseEvent*/) => {
     console.log("service.onclose... " + event.code);
     window.alert("Bye! See you later...");
+    window.close()
     // '1011': the server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.
   };
   service.onerror = () => {
